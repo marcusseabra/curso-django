@@ -1,0 +1,140 @@
+python3.10 [comando] :: Versão do curso
+python3 [comando] :: Versão nativa do linux
+
+# Adicionando entrada no repositório
+sudo add-apt-repository ppa:deadsnakes/ppa
+
+Discord: https://discord.gg/67PyPrXhwz
+Repositório do curso: https://github.com/luizomf/curso-django-projeto1
+
+Ao abrir o VS Code, sempre garantir:
+- A escolha do interpretador python do ambiente virtual
+- Ativar o ambiente virtual (ver como automatizar isso)
+
+Recursos úteis que podem ser usados ####################################################################################################################################################################
+- Arquivos css de interesse
+  https://cdnjs.com/libraries/font-awesome
+- Ícones
+  https://fontawesome.com/
+- Imagens
+  https://placeholder.com/
+  https://www.pexels.com/search/finances/
+- css
+  https://www.makeuseof.com/tag/css-template-sites-dont-start-scratch/
+  https://nicepage.com/pt/modelos-css
+  https://www.free-css.com/
+- Dev.to
+  https://dev.to/
+- mdn. Pesquisar no google "mdn [algum elemento html]"
+  https://developer.mozilla.org/pt-BR/
+- Tags html
+  https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element
+- Editores visuais html
+  https://webdesigner.withgoogle.com/
+  https://quilljs.com/
+  http://openelement.uk/
+  https://www.tiny.cloud/
+  https://www.coffeecup.com/html-editor/
+  https://pt.wix.com/
+  - Fonte: https://www.guru99.com/best-wysiwyg-html-editor.html
+
+Compreendendo a estrutura do Django ####################################################################################################################################################################
+- Estrutura de arquivos:
+  [pasta_projeto]
+    [global]                                                                      :: Pasta com templates de uso geral. Deve ser referenciada no arquivo settings.py, TEMPLATES
+    [nome_projeto]                                                                :: criado através do comando 'django-admin startproject [nome_projeto] .'
+      > settings.py                                                               :: Arquivo de configurações do Django. Lá devem ser incluídas referências aos aplicativos (apps) que compõem o projeto
+      > urls.py                                                                   :: As entradas contêm chamadas aos apps através do comando 'include'
+    [apps]                                                                        :: Pasta contendo os apps do projeto
+      [templates]
+        [apps]                                                                    :: por padronização, é o mesmo nome do app
+          > Páginas html que serão renderizadas no arquivo views.py
+      > urls.py
+      > views.py                                                                  :: Conterá funções python que implementarão a lógica de negócio e renderizará (método 'render') a respostas
+    [venv]                                                                        :: Pasta gerada ao se criar o ambiente virtual
+- Arquivo urls.py:
+  - Porta de entrada da aplicação
+  - Para cada entrada 'path', deve haver uma função especificada em algum app
+    - As funções nas entradas 'path' devem ter como argumento um HTTP_Request e como retorno um objeto HTTP_Response
+  - https://docs.djangoproject.com/en/4.0/topics/http/urls/
+- O arquivo manage.py carrega as configurações existentes no arquivo [nome_projeto]/settings.py
+  - https://docs.djangoproject.com/en/4.0/ref/django-admin/
+- A chamada python manage.py [opcao] é a principal no Django
+- O arquivo __init__.py pode ser usado para carregar informações para o projeto como se fosse um 'import' inicial. Regra geral, é deixado vazio
+- Os arquivos asgi.py e wsgi.py são usados no ambiente de produção para referenciar o servidor
+
+Onde publicar as aplicações ############################################################################################################################################################################
+- Importante: pesquisar como publicar o portfólio de aprendizado e de projetos profissionais realizados
+- Heroku
+- PythonAnywhere
+- AWS
+- Pesquisar opções na plataforma do Google
+
+Configuração de ambiente ###############################################################################################################################################################################
+- Configuração do VS Code
+  Importar configuração do arquivo settings.json
+  Instalar extensões Pylance e Django (batisteo)
+  Atenção para a configuração python.defaultInterpreterPath: ela aponta para a pasta do ambiente virtual (venv por padronização)
+  material icon theme :: Para que sejam visualizados ícones de pastas, arquivos no explorer do VS code
+
+- Instalação de pacotes
+  python3 -m pip install pip setuptools wheel --upgrade
+  python3 -m pip install testresources --upgrade
+  python3 -m pip install launchpadlib --upgrade
+
+- Criação do ambiente virtual
+  python3 -m venv venv                                :: O nome do ambiente virtual pode mudar, mas por padronização, adota-se venv
+  source [pasta projeto]/venv/bin/activate            :: Ativa o ambiente virtual. O comando 'source' pode ser substituído por '.'
+  source venv/bin/activate                            :: Ativação quando se está na pasta do projeto no shell
+  deactivate                                          :: Desativação do ambiente virtual
+  pip freeze                                          :: Exibe os pacotes instalados no ambiente virtual
+  pip install django
+
+- Configuração git
+  Criar repositório no Git e marcar opção para conexão por ssh
+  Execução de comandos de configuração:
+    git config --global user.name "Marcus Seabra"
+    git config --global user.email "seabra.marcus@gmail.com"
+    git config --global init.defaultBranch main                                 :: Estabelece o nome do branch master para main
+    git init
+    ssh-keygen                                                                  :: Criação par de chaves ssh na pasta /home/marcus.seabra/.ssh. São criados um arquivo público (.pub) e outro privado
+                                                                                   O arquivo público será usado para vincular o repositório no github na pasta local
+                                                                                   No github, deve-se adicionar o conteúdo da chave ssh pública em settings -> SSH and GPG keys -> SSH keys
+                                                                                   (do usuário, não do repositório)
+    git remote add origin git@github.com:marcusseabra/curso-django.git          :: Foi necessário reiniciar o VS Studio quando os comandos foram realizados pelo terminal do editor
+    git remote add origin git@github.com:marcusseabra/[nome_projeto].git        :: Foi necessário reiniciar o VS Studio quando os comandos foram realizados pelo terminal do editor
+    .gitignore                                                                  :: Neste arquivo devem ser colocadas pastas que serão ignoradas pelo git. Avaliar a utilidade disso quando se deseja
+                                                                                   baixar o código e o ambiente virtual criado já que, ao usar este recurso, os dados do ambiente virtual são ignorados.
+                                                                                   Exemplos de gitignore mais completos: busca google gitignore example django
+                                                                                   Gerador de gitignore: https://www.toptal.com/developers/gitignore
+    git status                                                                  :: Mostra o que precisa ser feito
+    git add .
+    git commit -m "Mensagem"
+
+- Configuração Django
+  django-admin startproject [nome_projeto] .                                    :: O '.' é necessário para evitar criação de muitas pastas com o nome do projeto
+  python manage.py runserver                                                    :: Deve ser executado na pasta do projeto para iniciar o servidor
+  python manage.py runserver <numero_porta>
+  python manage.py startapp [nome_app]                                          :: Por convenção, deve estar na mesma pasta do manage.py
+  python manage.py migrate                                                      :: Gera as tabelas necessárias ao ler a configuração INSTALLED_APPS (settings.py)
+
+Curso HTML & CSS #######################################################################################################################################################################################
+- Instalar a extensão "Live Server", um servidor HTML
+- Validação do documento HTML: https://validator.w3.org/
+- Estilos <style>
+  - Os estilos podem ser aplicados sobre atributos html, id's e classes
+  - Os atributos class são referenciadas por .
+  - Os atributos id são referenciados por #
+- Tag para link: <a>
+  - https://developers.google.com/search/docs/advanced/guidelines/qualify-outbound-links?hl=pt-br
+- Tag para imagem: <img>
+- Tags semânticas: <del>, <ins>, <strong>, <small>
+  - https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/strong
+- Tags de formatação: <sup>, <sub>, <q>, <b>, <s>, <code>, <pre>
+- Contêineres
+  - <span> :: contêiner genérico inline
+  - <div> :: contêiner genérico em bloco
+- Separação de conteúdo
+  https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element#separa%C3%A7%C3%A3o_de_conte%C3%BAdo
+
+########################################################################################################################################################################################################
