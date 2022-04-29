@@ -19,6 +19,8 @@ Documentação Django ##########################################################
 - https://docs.djangoproject.com/pt-br/3.2/topics/http/urls/
 - https://docs.djangoproject.com/en/4.0/ref/templates/language/#templates
 - Filtros: https://docs.djangoproject.com/en/4.0/ref/templates/builtins/#ref-templates-builtins-filters
+- Models: https://docs.djangoproject.com/en/4.0/topics/db/models/
+          https://docs.djangoproject.com/en/4.0/ref/models/fields/
 
 
 Arquivos estáticos #####################################################################################################################################################################################
@@ -70,6 +72,8 @@ Compreendendo a estrutura do Django ############################################
   - As páginas html são referenciadas em templates que ficam em uma pasta com este nome (template) a bem da padronização
 - urls.py
   - Contém referências às views
+- models.py
+  - Definição das tabelas do banco de dados no formato de classes Python
 - Funcionamento geral
   - Ao chamar o endereço inicial, o Django procura por ele no arquivo urls.py
   - O arquivo views.py é chamado para renderizar uma página HTML
@@ -155,6 +159,9 @@ Configuração de ambiente #####################################################
   python manage.py runserver <numero_porta>
   python manage.py startapp [nome_app]                                          :: Por convenção, deve estar na mesma pasta do manage.py
   python manage.py migrate                                                      :: Gera as tabelas necessárias ao ler a configuração INSTALLED_APPS (settings.py)
+  python manage.py makemigrations                                               :: Promove a configuração das migrações (a partir do código python gerar as tabelas)
+  python manage.py migrate                                                      :: Com base nas configurações existentes, gera as tabelas no banco de dados com base nas classes nos arquivo models.py
+  python manage.py createsuperuser                                              :: Criação de usuário administrador
 
 Curso HTML & CSS #######################################################################################################################################################################################
 - Instalar a extensão "Live Server", um servidor HTML
