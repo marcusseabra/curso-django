@@ -1,7 +1,10 @@
 <header class="main-header-container">
     <div class="main-header container">
         <h1>
-            <a class="main-logo" href="/">
+            {% comment %}
+                A tag url possibilita criar url's dinâmicas conforme definição no arquivo url.py
+            {% endcomment %}
+                <a class="main-logo" href=" {% url 'recipes:nome' %}">
                 <i class="fa-solid fa-kitchen-set main-logo-icon"></i>
                 <span>Receitas</span>
             </a>

@@ -11,6 +11,30 @@ Ao abrir o VS Code, sempre garantir:
 - A escolha do interpretador python do ambiente virtual
 - Ativar o ambiente virtual (ver como automatizar isso)
 
+atendimento
+encaminhamento
+glob_configuracao
+
+Documentação Django ####################################################################################################################################################################################
+- https://docs.djangoproject.com/pt-br/3.2/topics/http/urls/
+- https://docs.djangoproject.com/en/4.0/ref/templates/language/#templates
+- Filtros: https://docs.djangoproject.com/en/4.0/ref/templates/builtins/#ref-templates-builtins-filters
+
+
+Arquivos estáticos #####################################################################################################################################################################################
+- O Django possui recursos para tratar arquivos estáticos (CSS, HTML) para agilizar a exibição através do cache
+  - O Django envia informações para trabalhar de forma mais otimizada com tais arquivos (cache do navegador)
+  - A configuração para uso dos recursos dos arquivos estáticos é feita no arquivo settings.py
+    - STATIC_URL
+    - Documentação: https://docs.djangoproject.com/en/4.0/howto/static-files/
+- Deve ser criada uma pasta 'static' na pasta do app
+  - Por padronização, deve haver um namespace para os arquivos da pasta e isto é feito com o mesmo nome do app
+    - [nome_app]/static/[nome_app]/css
+    - [nome_app]/static/[nome_app]/javascript
+    - [nome_app]/static/[nome_app]/images
+- Pode haver arquivos estáticos comuns a todos os apps e isto também pode ser configurado (ver documentação)
+  - O arquivo settings.py deve ter a entrada STATICFILES_DIRS como indicado na documentação
+
 Recursos úteis que podem ser usados ####################################################################################################################################################################
 - Arquivos css de interesse
   https://cdnjs.com/libraries/font-awesome
@@ -39,6 +63,20 @@ Recursos úteis que podem ser usados ###########################################
   - Fonte: https://www.guru99.com/best-wysiwyg-html-editor.html
 
 Compreendendo a estrutura do Django ####################################################################################################################################################################
+- Os templates são as páginas HTML que são renderizadas conforme lógica de negócio
+  - Um template pode ser usado dentro de outro, seja pela tag Django 'include', seja pela tag de herança 'extends' em conjunto com 'block'
+- views.py
+  - Contém métodos cujo retorno, regra geral, é uma página HTML renderizada
+  - As páginas html são referenciadas em templates que ficam em uma pasta com este nome (template) a bem da padronização
+- urls.py
+  - Contém referências às views
+- Funcionamento geral
+  - Ao chamar o endereço inicial, o Django procura por ele no arquivo urls.py
+  - O arquivo views.py é chamado para renderizar uma página HTML
+    - Provavelmente, neste ponto há o encapsulamento das regras de negócio e chamada ao banco de dados
+  - Os arquivos estáticos, como css, javascript ou HTML's gerais são usados para carregamento rápido de artefatos que não exigem interação do usuário
+  - (?) Na página, deve haver chamada para outras entradas no arquivo urls.py
+  - No arquivo urls.py do projeto deve haver referência aos arquivos urls.py dos aplicativos
 - Estrutura de arquivos:
   [pasta_projeto]
     [global]                                                                      :: Pasta com templates de uso geral. Deve ser referenciada no arquivo settings.py, TEMPLATES
