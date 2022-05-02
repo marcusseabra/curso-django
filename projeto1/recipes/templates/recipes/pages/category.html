@@ -1,0 +1,14 @@
+{% extends 'global/base.html' %}
+{% block title %} | {{ title }} {% endblock title %}
+
+{% block content %}
+    <div class="main-content main-content-list container">
+        {% comment %}
+            A variável 'recipes' é capturada do contexto no arquivo views.py.
+            Já a variável 'recipe' contida no laço 'for', pode ser capturada no template recipe.html 
+        {% endcomment %}
+        {% for  recipe in  recipes %}
+            {% include "recipes/partials/recipe.html" %}
+        {% endfor %}
+    </div>
+{% endblock content %}
