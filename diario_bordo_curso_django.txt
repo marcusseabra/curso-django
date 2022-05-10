@@ -21,7 +21,15 @@ Documentação Django ##########################################################
 - Filtros: https://docs.djangoproject.com/en/4.0/ref/templates/builtins/#ref-templates-builtins-filters
 - Models: https://docs.djangoproject.com/en/4.0/topics/db/models/
           https://docs.djangoproject.com/en/4.0/ref/models/fields/
+- Configuração da base de dados: https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 - QuerySet: https://docs.djangoproject.com/es/4.0/ref/models/querysets/
+- Integração MongoDB: https://www.mongodb.com/compatibility/mongodb-and-django
+- Relacionamento: https://docs.djangoproject.com/en/4.0/ref/models/relations/
+- Lookup: https://docs.djangoproject.com/en/4.0/topics/db/queries/#field-lookups-intro
+- URL dispatcher: https://docs.djangoproject.com/en/4.0/topics/http/urls/
+- Templates: https://docs.djangoproject.com/en/4.0/topics/templates/
+- Request e Response: https://docs.djangoproject.com/en/4.0/ref/request-response/
+- Race conditions: https://docs.djangoproject.com/en/4.0/ref/models/expressions/#avoiding-race-conditions-using-f
 
 
 Arquivos estáticos #####################################################################################################################################################################################
@@ -79,11 +87,19 @@ Compreendendo a estrutura do Django ############################################
 - urls.py
   - Contém referências às views
 - models.py
-  - Definição das tabelas do banco de dados no formato de classes Python
+  - Definição das tabelas do banco de dados no formato de classes Python. O objetivo é definir o modelo de dados em um ponto e derivar coisas a partir da definição
+  - Os campos do modelo são instâncias da classe Field
   - O Django é capaz de tratar imagens e salvá-las em um arquivo e não no banco de dados
     - Deve-se configurar o settings.py para estabelecer a pasta (árvore de diretórios) em que o arquivo será salvo (MEDIA_URL e MEDIA_ROOT)
 - admin.py
   - Definição das entidades (models.py) que serão visíveis ao administrador
+- Função path() possui quatro argumentos
+  - route                           :: Contém uma url. Data a url fornecida no browser, Django irá procurar por um padrão que case com o fornecido
+  - view                            :: Chava a função/método na view indicada uma vez que houver a correspondência entre a url do browser e a url do path()
+  - kwargs                          :: Argumentos passados como dicionários para a função da view
+  - name                            :: Nomeia a url de modo a ser acessada pelos tamplates
+- Arquivo settings.py
+  - INSTALLED_APPS                  :: Mostra os aplicativos (apps) ativos para a instância Django. Os apps podem ser usados em outros projetos se forem devidamente empacotados e distribuídos
 - Funcionamento geral
   - Ao chamar o endereço inicial, o Django procura por ele no arquivo urls.py
   - O arquivo views.py é chamado para renderizar uma página HTML
@@ -98,9 +114,10 @@ Compreendendo a estrutura do Django ############################################
       > settings.py                                                               :: Arquivo de configurações do Django. Lá devem ser incluídas referências aos aplicativos (apps) que compõem o projeto
       > urls.py                                                                   :: As entradas contêm chamadas aos apps através do comando 'include'
     [apps]                                                                        :: Pasta contendo os apps do projeto
-      [templates]
+      [templates]                                                                 :: Por convenção, Django irá visualizar uma pasta templates para todos os apps instalados em INSTALLED_APPS.
+                                                                                     Ou seja, deve haver uma pasta chamada templates (criada manualmente) como subdiretório da pasta do app
         [apps]                                                                    :: por padronização, é o mesmo nome do app
-          > Páginas html que serão renderizadas no arquivo views.py
+          > Páginas html que serão renderizadas no arquivo views.py               :: A estrutura de diretórios cria um namespace. Isto é uma boa prática para evitar problemas com templates com mesmo nome
       > urls.py
       > views.py                                                                  :: Conterá funções python que implementarão a lógica de negócio e renderizará (método 'render') a respostas
     [venv]                                                                        :: Pasta gerada ao se criar o ambiente virtual
@@ -168,11 +185,15 @@ Configuração de ambiente #####################################################
   python manage.py runserver                                                    :: Deve ser executado na pasta do projeto para iniciar o servidor
   python manage.py runserver <numero_porta>
   python manage.py startapp [nome_app]                                          :: Por convenção, deve estar na mesma pasta do manage.py
-  python manage.py migrate                                                      :: Gera as tabelas necessárias ao ler a configuração INSTALLED_APPS (settings.py)
+  python manage.py migrate                                                      :: Gera as tabelas necessárias ao ler as configurações INSTALLED_APPS e DATABASES (settings.py). É possível remover
+                                                                                   tabelas que não sejam de interesse ao comentar ou excluir as linhas em INSTALLED_APPS
   python manage.py makemigrations                                               :: Promove a configuração das migrações (a partir do código python gerar as tabelas)
+  python manage.py sqlmigrate [nome_app] [numero_migration]                     :: Gera o script sql da configuração da migração
   python manage.py migrate                                                      :: Com base nas configurações existentes, gera as tabelas no banco de dados com base nas classes nos arquivo models.py
+                                                                                   A tabela django_migrations contém o histórico de migrações realizadas pelo Django
   python manage.py createsuperuser                                              :: Criação de usuário administrador (marcus.seabra amorius0107)
   python manage.py shell                                                        ::
+  python manage.py check                                                        :: Avalia pendências ou erros no projeto
     from recipes.models import Recipe, Category                                 :: Para consultar os modelos, é preciso importá-los antes
     categories = Category.objects.all()                                         :: A variável categories armazena um objeto QuerySet resultante da pesquisa sobre os registros em Category
     categories.order_by("-name")                                                :: Retorna um conjunto ordenado de forma decrescente pelo atributo 'name'

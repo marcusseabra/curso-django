@@ -65,7 +65,14 @@
     </footer>
     {% else %}
     <div class="preparation-steps">
-        {{ recipe.preparation_steps|linebreaksbr }}
+        {% comment %}
+        Campo preparation_steps_is_html é booleano no modelo
+        {% endcomment %}
+        {% if  recipe.preparation_steps_is_html %}
+            {{ recipe.preparation_steps|safe }}
+        {% else %}
+            {{ recipe.preparation_steps|linebreaksbr }}
+        {% endif %}
     </div>
     {% endif %}
 

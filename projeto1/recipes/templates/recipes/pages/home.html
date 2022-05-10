@@ -9,6 +9,10 @@
         {% endcomment %}
         {% for  recipe in  recipes %}
             {% include "recipes/partials/recipe.html" %}
+        {% empty %}
+            <div class="center m-y">
+                <h1>Não há receitas cadastradas.</h1>
+            </div>
         {% endfor %}
     </div>
 {% endblock content %}
