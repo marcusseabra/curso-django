@@ -17,11 +17,11 @@ def home(request):
 
 def category(request, category_id):
     # Busca pelas receitas com base na categoria enviada no contexto e filtrada no model
-    recipes = Recipe.objects.filter(
-        category__id=category_id, is_published=True).order_by("-id")
+    #    recipes = Recipe.objects.filter(
+    #        category__id=category_id, is_published=True).order_by("-id")
 
-#    if not recipes:
-#        raise Http404("Page not found")
+    #    if not recipes:
+    #        raise Http404("Page not found")
 
     recipes = get_list_or_404(
         Recipe.objects.filter(category__id=category_id,

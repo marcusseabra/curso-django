@@ -179,7 +179,8 @@ Configuração de ambiente #####################################################
     git status                                                                  :: Mostra o que precisa ser feito
     git add .
     git commit -m "Mensagem"
-
+- Testes
+  pip install pytest pytest-django                                              :: Pacotes para testes
 - Configuração Django
   django-admin startproject [nome_projeto] .                                    :: O '.' é necessário para evitar criação de muitas pastas com o nome do projeto
   python manage.py runserver                                                    :: Deve ser executado na pasta do projeto para iniciar o servidor
